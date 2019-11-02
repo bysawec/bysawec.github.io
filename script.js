@@ -82,8 +82,8 @@ popa.addEventListener("click", function fire1() {
 let secret = document.querySelector("#popec");
 secret.addEventListener("click", function () {
     Swal.fire(
-        "Отметка",
-        "https://vk.com/7bysaw7?z=photo129452267_456241834%2Falbum129452267_0%2Frev",
+        "Смотри на отметку",
+        "https://vk.com/bysawec?z=photo129452267_456241834%2Fphotos129452267",
         "question"
     );
 });
