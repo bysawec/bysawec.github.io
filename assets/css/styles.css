@@ -29,9 +29,25 @@ a:hover{
 	opacity: 1;
 }
 
+a.button7 {
+	margin-top: 20px;
+	font-weight: 700;
+	color: white;
+	text-decoration: none;
+	padding: .8em 1em calc(.8em + 3px);
+	border-radius: 3px;
+	background: rgb(64,199,129);
+	box-shadow: 0 -3px rgb(53,167,110) inset;
+	transition: 0.2s;
+  } 
+  a.button7:hover { background: rgb(53, 167, 110); }
+  a.button7:active {
+	background: rgb(33,147,90);
+	box-shadow: 0 3px rgb(33,147,90) inset;
+  }
 a.btn{
 	color: #fff;
-	border-radius: 4px;
+	border-radius: 20px;
 	text-transform: uppercase;
 	background-color: #2196F3;
 	font-weight: 800;
@@ -89,8 +105,6 @@ section p{
 ul.grid{
 	width: 100%;
 	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
 }
 
 
@@ -306,13 +320,6 @@ header nav li:last-child{
 }
 
 
-@media (max-width: 600px){
-
-	.features .grid li{
-		flex-basis: 100%;
-	}
-
-}
 
 
 
@@ -502,4 +509,17 @@ footer p a{
 #eye {
 	position: relative;
 
+}
+#box {
+	display: flex;
+  }
+#item1 {
+	margin: 0 100px;
+}
+.logo { 
+	margin-top: 210px;
+}
+.slogan {
+	color: yellowgreen;
+	font-size: elarg;
 }

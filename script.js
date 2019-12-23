@@ -1,3 +1,4 @@
+
 let kek = false;
 let wh = document.querySelector("#eye");
 let tyt = document.querySelector(".footer_text2");
@@ -108,4 +109,5 @@ let options = {
         color: '#fff'
     }
 };
+
 console.log(JSON.parse(JSON.stringify(options)));
