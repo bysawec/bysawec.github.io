@@ -524,23 +524,6 @@ footer p a{
 	color: yellowgreen;
 	font-size: elarg;
 }
-.tovar1 {
-	background-color: #fff;
-	height: 500px;
-	width: 400px;
-	display: flex;
-	flex-direction:column ;
-}
-.tovar1 p {
-	display: flex;
-	flex-direction: row;
-	justify-content: left;
-	font: bold 20px 'Open Sans', sans-serif;
-}
-.tovar1 .cena {
-	color: gray;
-	font-size: 15px;
-}
 * {box-sizing: border-box;}
 .product-item {
   width: 300px;
