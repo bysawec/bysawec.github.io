@@ -676,9 +676,10 @@ footer {
   align-items: center;
 }
 #video {
-  position: static;
-  margin-top: 10vh;
-  margin-bottom: -25vh;
+  position: absolute;
+  left: 50%;
+ margin-top: 3vh;
+  margin-left: -280px;
 }
 
 
