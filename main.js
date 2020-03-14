@@ -12,7 +12,7 @@ let box = 32;
 let score = 0;
 let gg = "game over"
 function checker () {
-if (score > 28) {
+if (score > 27) {
     clearInterval(game)
     clearInterval(checks)
     }
@@ -47,7 +47,7 @@ function direction(event) {
     else if(event.keyCode == 40 && dir != "up")
     dir = "down";
     else if(event.keyCode == 66)
-    game = setInterval(render, 30);
+    game = setInterval(render, 25);
 
 }
 
