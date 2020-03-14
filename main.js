@@ -99,7 +99,6 @@ function render () {
         }
         else if (snakeY > box * 16 && dir == "down") {
             snakeY = box * 2;
-            score -= 1;
         }
         else if (snakeY < box * 4 && dir == "up") {
             snakeY = box * 18; 
