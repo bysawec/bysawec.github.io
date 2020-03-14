@@ -47,7 +47,7 @@ function direction(event) {
     else if(event.keyCode == 40 && dir != "up")
     dir = "down";
     else if(event.keyCode == 66)
-    game = setInterval(render, 10);
+    game = setInterval(render,  30);
 
 }
 
