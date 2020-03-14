@@ -47,7 +47,7 @@ function direction(event) {
     else if(event.keyCode == 40 && dir != "up")
     dir = "down";
     else if(event.keyCode == 66)
-    game = setInterval(render, 20);
+    game = setInterval(render, 10);
 
 }
 
@@ -90,14 +90,22 @@ function render () {
       if(snakeX < box || snakeX > box * 17 || snakeY < 3 * box || snakeY > box * 17)
       score++;
 
-        if (snakeX < box + 1 && dir == "left")
+        if (snakeX < box + 1 && dir == "left"){
             snakeX = box * 18;
-        else if (snakeX > box * 16 && dir == "right") 
+            score-= 1;
+        }
+        else if (snakeX > box * 16 && dir == "right") {
             snakeX = box - 32;
-        else if (snakeY > box * 16 && dir == "down") 
+            score -=1;
+        }
+        else if (snakeY > box * 16 && dir == "down") {
             snakeY = box * 2;
-        else if (snakeY < box * 4 && dir == "up") 
+            score -= 1;
+        }
+        else if (snakeY < box * 4 && dir == "up") {
             snakeY = box * 18;    
+            score -= 1;
+        }
 
     if (dir == "left") snakeX -= box;
     if (dir == "right") snakeX += box;
