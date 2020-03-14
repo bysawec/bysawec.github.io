@@ -92,6 +92,7 @@ function render () {
 
         if (snakeX < box + 1 && dir == "left"){
             snakeX = box * 18;
+            score -= 1;
         }
         else if (snakeX > box * 16 && dir == "right") {
             snakeX = box - 32;
