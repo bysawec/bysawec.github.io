@@ -11,6 +11,13 @@ let box = 32;
 
 let score = 0;
 let gg = "game over"
+function checker () {
+if (score > 28) {
+    clearInterval(game)
+    clearInterval(checks)
+    }
+}
+let checks = setInterval(checker, 10)
 let food = {
     x: Math.floor((Math.random() * 17 + 1)) * box,
     y: Math.floor((Math.random() * 15 + 3)) * box,
@@ -39,6 +46,9 @@ function direction(event) {
     dir = "right";
     else if(event.keyCode == 40 && dir != "up")
     dir = "down";
+    else if(event.keyCode == 66)
+    game = setInterval(render, 30);
+
 }
 
 function eatTail (head, arr) {
@@ -51,9 +61,6 @@ function eatTail (head, arr) {
 
 
 function render () {
-    if (score > 28) {
-        clearInterval(game)
-    }
     ctx.drawImage(ground, 0, 0);
 
     ctx.drawImage(foodImg, food.x, food.y)
@@ -112,6 +119,7 @@ function end(){
     ctx.fillStyle = "black";
     ctx.font = "77px Arial";
     ctx.fillText(gg, box * 4 , box  * 8)
+    score = 0
     clearInterval(game);
 }
-let game = setInterval(render, 50);
+var game = setInterval(render, 40);
