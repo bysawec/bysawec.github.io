@@ -51,7 +51,7 @@ function eatTail (head, arr) {
 
 
 function render () {
-    if (score > 19) {
+    if (score > 28) {
         clearInterval(game)
     }
     ctx.drawImage(ground, 0, 0);
