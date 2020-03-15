@@ -5,7 +5,7 @@ const ground = new Image();
 ground.src = 'img/border.png'
 
 const foodImg = new Image();
-foodImg.src = 'img/food.png'
+foodImg.src = 'img/food4.png'
 
 const headImg = new Image()
 headImg.src = 'img/vova.png'
@@ -61,9 +61,31 @@ function eatTail (head, arr) {
     }
 
 };
-
+function dif() {
+    if (score > 10){
+    clearInterval(game)
+    clearInterval(game2)
+    game = setInterval(render, 40 )
+    };
+};
 
 function render () {
+    if (score > 0 && sessionStorage.getItem('score') < score ){
+        sessionStorage.setItem('score', score)
+        }
+    if (sessionStorage.getItem('score') > 10){
+        foodImg.src = "img/food2.png"
+    }
+    if (sessionStorage.getItem('score') > 15){
+        foodImg.src = "img/food5.png"
+    }
+    if (sessionStorage.getItem('score') > 20){
+        foodImg.src = "img/food.png"
+    }
+    if (sessionStorage.getItem('score') > 25) {
+        foodImg.src = "img/food.png"
+    }
+
     ctx.drawImage(ground, 0, 0);
 
     ctx.drawImage(foodImg, food.x, food.y)
@@ -133,4 +155,12 @@ function end(){
     score = 0
     clearInterval(game);
 }
-var game = setInterval(render, 40);
+
+function render2() {
+    if (score > 10){
+        dif()
+    }
+}
+var game2 = setInterval(render2, 10)
+var game = setInterval(render, 50);
+
