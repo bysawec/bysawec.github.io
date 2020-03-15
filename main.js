@@ -7,6 +7,8 @@ ground.src = 'img/border.png'
 const foodImg = new Image();
 foodImg.src = 'img/food.png'
 
+const headImg = new Image()
+headImg.src = 'img/vova.png'
 let box = 32;
 
 let score = 0;
@@ -67,7 +69,8 @@ function render () {
     ctx.drawImage(foodImg, food.x, food.y)
 
     for(let i = 0; i < snake.length; i++) {
-        ctx.fillStyle = i == 0 ? "green" : "red"
+        ctx.fillStyle = i % 2 == 0 ? "orange" : "red"
+        ctx.arc(100, 75, 50, 0, 2 * Math.PI); // ctx.arc(x, y, radius, 0, 2 * Math.PI);
         ctx.fillRect(snake[i].x, snake[i].y, 30, 30)
     }
 
@@ -118,6 +121,7 @@ function render () {
 
     eatTail(newHead, snake)
     snake.unshift(newHead);
+    ctx.drawImage(headImg, newHead.x, newHead.y)
 }
 
 
