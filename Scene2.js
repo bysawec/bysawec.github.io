@@ -71,9 +71,9 @@ class Scene2 extends Phaser.Scene {
     this.ground.setScrollFactor(0);
     this.platforms = this.physics.add.staticGroup();
     this.platforms.add(this.ground);
-    this.physics.add.existing(this.ground).body.setSize(100000, 10, true);
+    this.physics.add.existing(this.ground).body.setSize(100000, 5, true);
     // sinc this tile is shorter I positioned it at the bottom of he screen
-    this.player = this.physics.add.sprite(100, game.config.height - 100, "adv");
+    this.player = this.physics.add.sprite(100, game.config.height - 90, "adv");
     this.player.play("idle");
     this.player.setBounce(0.0);
     this.physics.add.collider(this.player, this.platforms);
