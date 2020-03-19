@@ -225,7 +225,6 @@ class Scene2 extends Phaser.Scene {
     this.enemy.setFlipX(true);
     this.player.hp = 150;
     this.tickplayer = 0;
-    this.player.setCollideWorldBounds(true);
     this.enemy.setCollideWorldBounds(true);
   }
 
@@ -256,7 +255,6 @@ class Scene2 extends Phaser.Scene {
       } else if (this.enemy.x < this.player.x) {
         this.enemy.do = "runright";
       } else if (this.enemy.x == this.player.x) {
-        this.enemy.setVelocity(40, -100);
         this.enemy.status = "idle";
       }
     }
