@@ -1,13 +1,13 @@
 var config = {
   width: window.innerWidth / 3,
-  height: window.innerHeight / 4,
+  height: window.innerHeight / 3.5,
   backgroundColor: 0x000000,
   scene: [Scene1, Scene2],
   pixelArt: true,
   physics: {
     default: "arcade",
     arcade: {
-      debug: false
+      debug: true
     }
   },
   antialias: true,
