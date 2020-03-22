@@ -1,13 +1,13 @@
-var config = {
-  width: window.innerWidth / 3,
-  height: window.innerHeight / 3.5,
+const config = {
+  width: 600,
+  height: 200,
   backgroundColor: 0x000000,
   scene: [Scene1, Scene2],
   pixelArt: true,
   physics: {
     default: "arcade",
     arcade: {
-      debug: false
+      debug: true
     }
   },
   antialias: true,
@@ -17,4 +17,4 @@ var config = {
   }
 };
 
-var game = new Phaser.Game(config);
+const game = new Phaser.Game(config);

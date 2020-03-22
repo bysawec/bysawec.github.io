@@ -95,8 +95,6 @@ class Scene2 extends Phaser.Scene {
     this.sword = this.physics.add.sprite(200, game.config.height - 70, "sword");
     this.playergroup.add(this.player).add(this.sword);
     this.sword.setVisible(false);
-
-    this.player.play("idle");
     this.player.setBounce(0.0);
     this.player.body.setGravityY(500);
     this.player.body.setOffset(18, 8);
@@ -183,15 +181,15 @@ class Scene2 extends Phaser.Scene {
     var inputs = this.input;
 
     Space.on("down", function() {
-      player.play("jump", false);
+      player.play("jump", true);
       if (player.body.touching.down) {
-        player.setVelocityY(-200);
+        player.setVelocityY(-250);
       }
     });
     inputs.on("pointerdown", () => {
       this.player.play("fight", true);
     });
-    this.hp = 2000;
+    this.hp = 40;
     this.receiveDamage = function(damage) {
       this.hp -= damage;
 
@@ -219,36 +217,105 @@ class Scene2 extends Phaser.Scene {
     setTimeout(() => {
       this.startText.destroy();
     }, 5000);
-    this.hey = this.add.text(this.enemy.x - 6, this.enemy.y - 30, "Hey!!", {
-      fontSize: "9px"
-    });
     this.enemy.setFlipX(true);
     this.player.hp = 150;
     this.tickplayer = 0;
     this.enemy.setCollideWorldBounds(true);
-  }
-
-  update() {
-    if (this.enemy.status != "dead") {
-      this.hey.setText("Yo");
+    var enemy = this.enemy;
+    this.input.on("pointerdown", function(pointer) {
+      enemy.x = pointer.x;
+      enemy.y = pointer.y;
+    });
+    this.textdead = this.add.text(
+      this.myCam.x + game.config.width / 2,
+      this.myCam.y + 100,
+      "You are dead."
+    );
+    this.textdead.alpha = 0;
+    this.hey = this.add.text(this.enemy.x - 6, this.enemy.y - 30, "Hey!!", {
+      fontSize: "9px"
+    });
+    setTimeout(() => {
+      heytext.setText("Yo");
       setTimeout(() => {
-        this.hey.setText("My name is Lora");
+        heytext.setText("My name is Lora");
         setTimeout(() => {
-          this.hey.setText("I need your help");
+          heytext.setText("I need your help");
           setTimeout(() => {
-            this.hey.setText("Kill all monsters please!!!");
+            heytext.setText("Kill all monsters please!!!");
             setTimeout(() => {
-              this.hey.setText("bip bup bip bup............");
+              heytext.setText("bip bup bip bup............");
               this.enemy.status = "fight";
               setTimeout(() => {
-                this.hey.setVisible(false);
+                heytext.setVisible(false);
                 this.enemy.status = "fight";
+                setTimeout(() => {
+                  this.enemy.status = "patrol";
+                }, 4000);
               }, 500);
             }, 1000);
           }, 2000);
         }, 2000);
       }, 2000);
+    }, 5000);
+    var heytext = this.hey;
+  }
+
+  update() {
+    if (this.enemy.status == "patrol") {
+      this.physics.collide(this.enemy, this.physics.world, () => {
+        if (this.enemy.x < 70) {
+          this.enemy.x += 0.5;
+        } else if (this.enemy.x > 500) {
+          this.enemy.x -= 0.5;
+        }
+      });
     }
+    var resetpos = () => {
+      this.textdead.set;
+      this.tweens.add({
+        targets: this.textdead,
+        alpha: { from: 0, to: 1 },
+        // alpha: { start: 0, to: 1 },
+        // alpha: 1,
+        // alpha: '+=1',
+        ease: "Linear", // 'Cubic', 'Elastic', 'Bounce', 'Back'
+        duration: 1000,
+        repeat: 0, // -1: infinity
+        yoyo: false
+      });
+      this.player.setVisible(false);
+      setTimeout(() => {
+        this.tweens.add({
+          targets: this.textdead,
+          alpha: { from: 1, to: 0 },
+          // alpha: { start: 0, to: 1 },
+          // alpha: 1,
+          // alpha: '+=1',
+          ease: "Linear", // 'Cubic', 'Elastic', 'Bounce', 'Back'
+          duration: 1000,
+          repeat: 0, // -1: infinity
+          yoyo: false
+        });
+        this.player.x = 100;
+        this.player.y = game.config.height - 90;
+        this.player.hp = 20;
+        this.player.setVisible(true);
+        this.textdead.setVisible(false);
+        this.textdead.setActive(false);
+        var tween = this.tweens.add({
+          targets: this.player,
+          alpha: { from: 0, to: 1 },
+          // alpha: { start: 0, to: 1 },
+          // alpha: 1,
+          // alpha: '+=1',
+          ease: "Linear", // 'Cubic', 'Elastic', 'Bounce', 'Back'
+          duration: 1000,
+          repeat: 0, // -1: infinity
+          yoyo: false
+        });
+      }, 2000);
+    };
     if (this.enemy.status == "fight") {
       if (this.enemy.x > this.player.x) {
         this.enemy.do = "runleft";
@@ -273,51 +340,87 @@ class Scene2 extends Phaser.Scene {
     if (this.player.flipX == true) {
       this.sword.body.setOffset(-13, 1);
     }
-    if (this.cursors.shift.isDown) {
+    if (
+      this.cursors.shift.isDown &&
+      !this.cursors.left.isDown &&
+      !this.cursors.right.isDown
+    ) {
       this.attacking = true;
-
       this.player.play("fight", true);
-    } else if (this.cursors.left.isDown && this.player.x > 0) {
+    } else if (
+      this.cursors.left.isDown &&
+      this.player.x > 0 &&
+      !this.cursors.shift.isDown
+    ) {
       this.sword.body.setOffset(-15, 1);
       this.player.play("run", true);
       this.player.setFlipX(true);
       this.player.x -= 1;
     } else if (
       this.cursors.right.isDown &&
-      this.player.x < game.config.width * 3
+      this.player.x < game.config.width * 3 &&
+      !this.cursors.shift.isDown
     ) {
       this.thisyou.destroy();
       this.player.setFlipX(false);
       this.player.play("run", true);
       this.player.x += 1;
-    } else if (this.input.activePointer.isDown) {
-      this.superattack = true;
+    } else if (this.cursors.shift.isDown && this.cursors.left.isDown) {
+      this.player.setFlipX(true);
+      this.attacking = true;
+      this.player.play("fight", true);
+      this.player.x -= 0.5;
+    } else if (this.cursors.shift.isDown && this.cursors.right.isDown) {
+      this.player.setFlipX(false);
+      this.attacking = true;
+      this.player.play("fight", true);
+      this.player.x += 0.5;
     } else {
       this.player.play("idle", true);
+    }
+    if (this.input.activePointer.isDown) {
+      this.superattack = true;
     }
     this.physics.collide(this.enemies, this.player);
     this.dying = this.physics.overlap(this.enemies, this.player, () => {
       if (this.attacking == true && this.player.body.x == this.enemy.body.x) {
-        let text = this.add.text(this.player.x, this.player.y - 70, "miss");
+        let text = this.add.text(this.player.x, this.player.y - 70, "keks");
         setTimeout(() => {
           text.destroy(true);
         }, 500);
       }
-      if (this.enemy.flipX == true) {
-        this.player.setVelocity(-300, -100);
-      } else {
-        this.player.setVelocity(300, -100);
-      }
-      setTimeout(() => {
-        this.player.setVelocity(0, 0);
-      }, 100);
-      this.tickplayer++;
-      if (this.tickplayer % 2 == 0) {
-        this.player.setTint(0xff0000, 0xff0000, 0xff0000, 0xff0000);
-        this.receiveDamage(3, this.player.hp, this.player);
+      if (this.attacking == false) {
+        if (this.enemy.flipX == false && this.player.flipX == true) {
+          this.player.setVelocity(400, -50);
+        } else if (this.enemy.flipX == true && this.player.flipX == false) {
+          this.player.setVelocity(-400, -50);
+        } else if (
+          this.enemy.flipX == true &&
+          this.player.flipX == true &&
+          this.player.x > this.enemy.x
+        ) {
+          this.player.setVelocity(400, -50);
+        } else if (
+          this.enemy.flipX == false &&
+          this.player.flipX == false &&
+          this.player.x > this.enemy.x
+        ) {
+          this.player.setVelocity(-400, -50);
+        }
         setTimeout(() => {
-          this.player.clearTint();
-        }, 1000);
+          this.player.setVelocity(0, 0);
+        }, 50);
+        this.tickplayer++;
+        if (this.tickplayer % 2 == 0) {
+          this.player.setTint(0xff0000, 0xff0000, 0xff0000, 0xff0000);
+          this.player.hp--;
+          if (this.player.hp <= 0) {
+            resetpos();
+          }
+          setTimeout(() => {
+            this.player.clearTint();
+          }, 1000);
+        }
       }
     });
     if (this.attacking == true) {
@@ -328,27 +431,19 @@ class Scene2 extends Phaser.Scene {
           if (this.time % 30 == 0) {
             this.enemy.setTint(0xff0000, 0xff0000, 0xff0000, 0xff0000);
             this.receiveDamage(3);
-            if (this.superattack) {
-              if (this.enemy.flipX == false) {
-                this.enemy.setVelocity(-300, -1000);
-              } else if (this.enemy.flipX == true) {
-                this.enemy.setVelocity(300, -1000);
-              }
-            } else {
-              if (this.enemy.flipX == false) {
-                this.enemy.setVelocity(-300, -100);
-              } else if (this.enemy.flipX == true) {
-                this.enemy.setVelocity(300, -100);
-              }
+            if (this.enemy.flipX == true && this.player.flipX == false) {
+              this.enemy.setVelocity(100, -100);
+            } else if (this.enemy.flipX == false && this.player.flipX == true) {
+              this.enemy.setVelocity(-100, -100);
             }
             setTimeout(() => {
               this.enemy.clearTint();
               this.enemy.setVelocity(0, 0);
             }, 200);
           }
-          this.enemy.setY(this.enemy.y);
-          this.enemy.setX(this.enemy.x);
         }
+        this.enemy.setY(this.enemy.y);
+        this.enemy.setX(this.enemy.x);
       });
     }
     if (this.enemy.status == "idle") {
@@ -359,12 +454,15 @@ class Scene2 extends Phaser.Scene {
       }, 2000);
       this.enemy.body.destroy();
       this.enemy.play("enemydead", true);
-    } else if (this.enemy.do == "runright") {
-      this.enemy.x += 0.5;
-      this.enemy.setFlipX(false);
-    } else if (this.enemy.do == "runleft") {
-      this.enemy.x -= 0.5;
-      this.enemy.setFlipX(true);
+    }
+    if (this.enemy.status == "fight") {
+      if (this.enemy.do == "runright") {
+        this.enemy.x += 0.5;
+        this.enemy.setFlipX(false);
+      } else if (this.enemy.do == "runleft") {
+        this.enemy.x -= 0.5;
+        this.enemy.setFlipX(true);
+      }
     }
 
     // scroll the texture of the tilesprites proportionally to the camera scroll
