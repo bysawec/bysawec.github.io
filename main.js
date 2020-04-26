@@ -70,6 +70,9 @@ function dif() {
 };
 
 function render () {
+    if (score < -49){
+        
+    }
     if (score > 0 && sessionStorage.getItem('score') < score ){
         sessionStorage.setItem('score', score)
         }
