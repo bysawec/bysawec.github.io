@@ -606,7 +606,7 @@ html {
   }
   #hero {
     position: absolute;
-    top: 40vh;
+    top: 45vh;
     left: 0;
     right: 0;
     margin: auto;
@@ -618,7 +618,7 @@ html {
 #text{
     width: 700px;
     position: absolute;
-    top: 10%;
+    top: 8%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);

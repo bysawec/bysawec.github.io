@@ -117,7 +117,7 @@ window.onload = () => {
         text: "100%",
         round: 1,
         easing: 'linear',
-        duration: 3000,
+        duration: 1500,
         update: function () {
             start.innerHTML = quest.text;
         }
