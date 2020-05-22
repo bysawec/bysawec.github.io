@@ -149,7 +149,7 @@ window.onload = () => {
     }, 6600);
     setTimeout(() => {
         btn.style.display = "block"
-        start.innerHTML = "У меня есть предложение для вас."
+        start.innerHTML = "У меня есть предложение для Вас."
         anime({
             targets: "#start",
             opacity: 1,
