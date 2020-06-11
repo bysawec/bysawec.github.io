@@ -1,0 +1,16 @@
+{
+"companyName": "bySawProd",
+"productName": "MEGA_FPS",
+"productVersion": "1",
+"dataUrl": "bysawec.github.io.data.unityweb",
+"wasmCodeUrl": "bysawec.github.io.wasm.code.unityweb",
+"wasmFrameworkUrl": "bysawec.github.io.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.0f1"
+}
